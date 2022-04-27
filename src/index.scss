@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap');
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}
+
+:root {
+  --clr-white: #FFFFFF;
+  --clr-black: #222222;
+  --clr-red: #EF233C;
+  --clr-bkg-teal: #0D455D;
+  --clr-bkg-teal: #0D455D;
+  --clr-text-grey: #00000024;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Roboto', sans-serif;
+  font-weight: normal;
+  font-size: 1.6rem;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
