@@ -8,7 +8,6 @@ const Header = () => {
   const handler = () => setScreenWidth(window.innerWidth)
 
   useLayoutEffect(() => {
-
     window.addEventListener('load', handler)
     window.addEventListener('resize', handler)
     return () => {
@@ -19,7 +18,7 @@ const Header = () => {
 
   return (
     <div>
-    {screenWidth < 620 ? <MobileNav /> : <DesktopNav />}
+    {screenWidth < 700 ? <MobileNav /> : <DesktopNav />}
     </div>
   )
 }
