@@ -7,11 +7,11 @@ html {
 }
 
 :root {
-  --clr-white: #FFFFFF;
+  --clr-white: #ffffff;
   --clr-black: #222222;
-  --clr-red: #EF233C;
-  --clr-bkg-teal: #0D455D;
-  --clr-bkg-teal: #0D455D;
+  --clr-red: #ef233c;
+  --clr-bkg-teal: #0d455d;
+  --clr-bkg-grey: #f0f0f3;
   --clr-text-grey: #00000024;
 }
 
@@ -43,8 +43,8 @@ a {
 }
 
 .row {
-  width: 90%;
-  max-width: 120rem;
+  width: 95%;
+  max-width: 192rem;
   margin-inline: auto;
 }
 
