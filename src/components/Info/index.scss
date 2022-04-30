@@ -62,10 +62,11 @@
   }
   @media (min-width: 600px) {
     &__left {
-      padding: 8rem 3rem;
+      padding: 8rem 6rem;
     }
     &__right {
       grid-template-columns: repeat(2, 1fr);
+      padding: 6rem;
     }
   }
   @media (min-width: 1200px) {
