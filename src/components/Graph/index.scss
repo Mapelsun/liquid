@@ -1,0 +1,29 @@
+.graph {
+  background-color: var(--clr-bkg-grey);
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  &__heading {
+    font: italic normal 300 2.5rem/3.3rem Roboto;
+    letter-spacing: 0px;
+    color: var(--clr-red);
+    border-left: 2px solid var(--clr-red);
+    padding-left: 2rem;
+    margin-bottom: 2.7rem;
+  }
+  &__svg {
+    height: 50rem;
+    width: 100%;
+    margin-right: '0px';
+    margin-left: '0px';
+  }
+  @media (min-width: 600px) {
+    padding: 5rem;
+  }
+  @media (min-width: 1200px) {
+    padding: 10rem;
+  }
+}
+
