@@ -8,35 +8,35 @@ const Graph = () => {
       name: 'LIQID Cash',
       initial: 92,
       value: 920,
-      growth: '1.000%',
+      growth: 1.0,
       color: '#C9B7C5',
     },
     {
       name: 'LIQID Real Estate',
       initial: 63,
       value: 630,
-      growth: '1.000%',
+      growth: 1.0,
       color: '#AFDDAF',
     },
     {
       name: 'LIQID Wealth',
       initial: 85,
       value: 850,
-      growth: '1.000%',
+      growth: 1.0,
       color: '#076283',
     },
     {
       name: 'LIQID Private Equity',
       initial: 22,
       value: 220,
-      growth: '1.000%',
+      growth: 1.0,
       color: '#79C6C0',
     },
     {
       name: 'LIQID Venture',
       initial: 51,
       value: 510,
-      growth: '1.000%',
+      growth: 1.0,
       color: '#FFE163',
     },
   ]
@@ -106,7 +106,13 @@ const Graph = () => {
         .attr('width', x.bandwidth())
         .on('mouseover', function (e, d, i) {
           tooltip
-            .html(`<div>${d.name}</div>`)
+            .html(
+              `<div class="tool-tip">
+                <p><span>Total:</span><span>${d.value} €</span></p>
+                <p><span>Initial invest:</span><span>${d.initial} €</span></p>
+                <p><span>Growth:</span><span>${d.growth} %</span></p>
+              </div>`
+            )
             .style('visibility', 'visible')
             .style('display', 'block')
 

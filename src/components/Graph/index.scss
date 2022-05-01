@@ -24,3 +24,24 @@
   }
 }
 
+// tooltip classes
+.tool-tip {
+  p {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  span {
+    white-space: nowrap;
+    &:nth-last-of-type(1) {
+      font: normal normal medium 1rem/1.4rem Roboto;
+      letter-spacing: 0px;
+      color: var(--clr-black);
+    }
+    &:nth-of-type(2) {
+      color: var(--clr-graph-blue);
+      font: normal normal normal 1rem/1.4rem Roboto;
+    }
+  }
+}
+
