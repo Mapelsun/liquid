@@ -14,10 +14,7 @@
     margin-bottom: 2.7rem;
   }
   &__svg {
-    height: 50rem;
-    width: 100%;
-    margin-right: '0px';
-    margin-left: '0px';
+    max-width: 80rem;
   }
   @media (min-width: 600px) {
     padding: 5rem;
