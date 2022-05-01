@@ -16,13 +16,6 @@ const Graph = () => {
     { name: 'LIQID Venture', initial: 51, value: 510, color: '#FFE163' },
   ]
 
-  // const data = [
-  //   { name: 'apple', price: 100 },
-  //   { name: 'limon', price: 300 },
-  //   { name: 'strawberry', price: 150 },
-  //   { name: 'blueberry', price: 250 },
-  // ]
-
   const ref = useD3(
     (svg) => {
       // Responsive Graph
@@ -50,6 +43,7 @@ const Graph = () => {
       const xAxis = d3.axisBottom(x)
       const yAxis = d3.axisLeft(y)
 
+      // Tooltip
       const tooltip = d3
         .select('body')
         .append('div')
@@ -66,6 +60,7 @@ const Graph = () => {
         .attr('height', svgHeight)
         .attr('width', svgWidth)
 
+      // Bars
       const bar = svg
         .append('g')
         .attr('height', graphHeight)
@@ -89,7 +84,7 @@ const Graph = () => {
         .on('mouseover', function (e, d, i) {
           tooltip.html(`<div>${d.name}</div>`).style('visibility', 'visible')
 
-          d3.select(this).attr('fill', 'var(--clr-red)')
+          d3.select(this).transition().attr('fill', 'var(--clr-red)')
         })
         .on('mousemove', function (e) {
           tooltip
@@ -98,14 +93,22 @@ const Graph = () => {
         })
         .on('mouseout', function () {
           tooltip.html(``).style('visibility', 'hidden')
-          d3.select(this).transition().attr('fill', (d) => d.color)
+          d3.select(this)
+            .transition()
+            .ease(d3.easeLinear)
+            .duration(800)
+            .delay((d, i) => i * 100)
+            .attr('fill', (d) => d.color)
         })
 
+      // x axis
       svg
         .append('g')
         .attr('transform', `translate(${graphMarginLeft}, ${graphMarginTop})`)
         .call(yAxis)
+        .attr('color', 'var(--clr-graph-grey)')
 
+      // y axis
       svg
         .append('g')
         .attr(
@@ -113,6 +116,7 @@ const Graph = () => {
           `translate(${graphMarginLeft}, ${svgHeight - graphMarginTop})`
         )
         .call(xAxis)
+        .attr('color', 'var(--clr-graph-grey)')
     },
     [data.length]
   )
@@ -120,8 +124,7 @@ const Graph = () => {
   return (
     <section className='graph'>
       <h2 className='graph__heading'>Your products</h2>
-      <svg ref={ref} className='graph__svg'>
-      </svg>
+      <svg ref={ref} className='graph__svg'></svg>
     </section>
   )
 }
