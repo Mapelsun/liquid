@@ -4,87 +4,115 @@ import './index.scss'
 
 const Graph = () => {
   const data = [
-    { name: 'LIQID Cash', initial: 92, value: 920, color: '#C9B7C5' },
-    { name: 'LIQID Real Estate', initial: 63, value: 630, color: '#AFDDAF' },
-    { name: 'LIQID Wealth', initial: 85, value: 850, color: '#076283' },
+    {
+      name: 'LIQID Cash',
+      initial: 92,
+      value: 920,
+      growth: '1.000%',
+      color: '#C9B7C5',
+    },
+    {
+      name: 'LIQID Real Estate',
+      initial: 63,
+      value: 630,
+      growth: '1.000%',
+      color: '#AFDDAF',
+    },
+    {
+      name: 'LIQID Wealth',
+      initial: 85,
+      value: 850,
+      growth: '1.000%',
+      color: '#076283',
+    },
     {
       name: 'LIQID Private Equity',
       initial: 22,
       value: 220,
+      growth: '1.000%',
       color: '#79C6C0',
     },
-    { name: 'LIQID Venture', initial: 51, value: 510, color: '#FFE163' },
+    {
+      name: 'LIQID Venture',
+      initial: 51,
+      value: 510,
+      growth: '1.000%',
+      color: '#FFE163',
+    },
   ]
 
   const ref = useD3(
     (svg) => {
-      // Responsive Graph
+      const width = 700
+      const height = 400
+      const margin = { top: 20, right: 0, bottom: 30, left: 40 }
 
-      // const svgHeight = svg.node().getBoundingClientRect().width
-      // const svgWidth = svg.node().getBoundingClientRect().height
-
-      const svgHeight = 600
-      const svgWidth = 600
-      const graphHeight = 500
-      const graphWidth = 500
-      const graphMarginLeft = (svgHeight - graphHeight) / 2
-      const graphMarginTop = (svgWidth - graphWidth) / 2
-      const maxValue = d3.max(data, (d) => d.value)
-
+      // x axis
       const x = d3
         .scaleBand()
-        .domain(data.map((it) => it.name))
-        .range([0, graphWidth])
-        .paddingInner(0.2)
-        .paddingOuter(0.2)
+        .domain(data.map((d) => d.name))
+        .range([margin.left, width - margin.right])
+        .padding(0.3)
 
-      const y = d3.scaleLinear().domain([0, maxValue]).range([graphHeight, 0])
+      const xAxis = (g) =>
+        g
+          .attr('transform', `translate(0,${height - margin.bottom})`)
+          .call(d3.axisBottom(x).tickSizeOuter(0))
+          .attr('color', 'var(--clr-black)')
 
-      const xAxis = d3.axisBottom(x)
-      const yAxis = d3.axisLeft(y)
+      const xAxisG = svg.append('g').call(xAxis)
+      xAxisG.selectAll('text').attr('fill', 'var(--clr-graph-grey)')
 
-      // Tooltip
+      // y axis
+      const y = d3
+        .scaleLinear()
+        .domain([0, d3.max(data, (d) => d.value)])
+        .nice()
+        .range([height - margin.bottom, margin.top])
+
+      const yAxis = (g) =>
+        g
+          .attr('transform', `translate(${margin.left},0)`)
+          .call(d3.axisLeft(y).tickFormat(d3.format(',.2s')))
+          .attr('color', 'var(--clr-black')
+
+      const yAxisG = svg.append('g').call(yAxis)
+      yAxisG.selectAll('text').attr('fill', 'var(--clr-graph-grey)')
+
+      // tooltip
       const tooltip = d3
         .select('body')
         .append('div')
         .style('position', 'absolute')
         .style('z-index', '10')
         .style('visibility', 'hidden')
+        .style('display', 'none')
         .style('padding', '10px')
         .style('background', 'rgba(255,255,255,1)')
         .style('border-radius', '0 0 0 1.2rem')
         .style('color', 'rgba(0,0,0,1)')
 
-      svg
-        .attr('viewBox', [0, 0, svgWidth, svgHeight])
-        .attr('height', svgHeight)
-        .attr('width', svgWidth)
-
-      // Bars
-      const bar = svg
+      // the graph
+      const theGraph = svg
         .append('g')
-        .attr('height', graphHeight)
-        .attr('width', graphWidth)
-        .attr(
-          'transform',
-          `translate(${(svgWidth - graphWidth) / 2}, ${
-            (svgHeight - graphHeight) / 2
-          })`
-        )
-
-      bar
         .selectAll('rect')
         .data(data)
-        .join('rect')
-        .attr('width', x.bandwidth)
-        .attr('height', (d) => graphHeight - y(d.value))
+        .enter()
+        .append('rect')
+        .attr('fill', (d) => d.color)
         .attr('x', (d) => x(d.name))
         .attr('y', (d) => y(d.value))
-        .attr('fill', (d) => d.color)
+        .attr('height', (d) => y(0) - y(d.value))
+        .attr('width', x.bandwidth())
         .on('mouseover', function (e, d, i) {
-          tooltip.html(`<div>${d.name}</div>`).style('visibility', 'visible')
+          tooltip
+            .html(`<div>${d.name}</div>`)
+            .style('visibility', 'visible')
+            .style('display', 'block')
 
-          d3.select(this).transition().attr('fill', 'var(--clr-red)')
+          d3.select(this)
+            .transition()
+            .attr('fill', (d) => d.color)
         })
         .on('mousemove', function (e) {
           tooltip
@@ -92,31 +120,38 @@ const Graph = () => {
             .style('left', e.pageX + 10 + 'px')
         })
         .on('mouseout', function () {
-          tooltip.html(``).style('visibility', 'hidden')
+          tooltip
+            .html(``)
+            .style('visibility', 'hidden')
+            .style('display', 'none')
           d3.select(this)
             .transition()
-            .ease(d3.easeLinear)
-            .duration(800)
-            .delay((d, i) => i * 100)
             .attr('fill', (d) => d.color)
         })
 
-      // x axis
-      svg
-        .append('g')
-        .attr('transform', `translate(${graphMarginLeft}, ${graphMarginTop})`)
-        .call(yAxis)
-        .attr('color', 'var(--clr-graph-grey)')
+      // value on top of bar
+      const valueOnBar = svg
+        .selectAll('bar')
+        .data(data)
+        .enter()
+        .append('text')
+        .attr('class', 'bar')
+        .attr('text-anchor', 'middle')
+        .attr('x', function (d) {
+          return x(d.name) + x.bandwidth() / 2
+        })
+        .attr('y', function (d) {
+          return y(d.value) - 15
+        })
+        .text(function (d) {
+          return `${d.value}€`
+        })
+        .style('font-size', 10)
+        .style('fill', 'var(--clr-black)')
 
-      // y axis
       svg
-        .append('g')
-        .attr(
-          'transform',
-          `translate(${graphMarginLeft}, ${svgHeight - graphMarginTop})`
-        )
-        .call(xAxis)
-        .attr('color', 'var(--clr-graph-grey)')
+        .attr('preserveAspectRatio', 'xMaxYMax meet')
+        .attr('viewBox', [-20, -20, width + 50, height + 80])
     },
     [data.length]
   )
