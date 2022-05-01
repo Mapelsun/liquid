@@ -44,6 +44,14 @@ a {
   text-decoration: none;
 }
 
+a.active {
+  color: var(--clr-red);
+}
+
+a.active .a {
+  fill: var(--clr-red);
+}
+
 .row {
   width: 95%;
   max-width: 192rem;
@@ -54,3 +62,4 @@ a {
   margin-top: auto;
   background-color: var(--clr-black);
 }
+

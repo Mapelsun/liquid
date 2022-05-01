@@ -1,9 +1,9 @@
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import logoWhite from '../../../assets/logo-white.svg'
 import exit from '../../../assets/exit.svg'
-import home from '../../../assets/home.svg'
-import user from '../../../assets/user.svg'
-import settings from '../../../assets/settings.svg'
+import { ReactComponent as HomeIcon } from '../../../assets/home.svg'
+import { ReactComponent as UserIcon } from '../../../assets/user.svg'
+import { ReactComponent as SettingsIcon } from '../../../assets/settings.svg'
 import './index.scss'
 
 const DesktopNav = () => {
@@ -18,22 +18,22 @@ const DesktopNav = () => {
             Hallo, <span>LIQID!</span>
           </p>
           <div className='nav__divider'></div>
-          <NavLink to='/' className='nav__link'>
+          <Link to='/' className='nav__link'>
             <img src={exit} alt='logout icon' />
             <span>Logout</span>
-          </NavLink>
+          </Link>
         </div>
         <div className='nav__right'>
           <NavLink to='/' className='nav__link'>
-            <img src={home} alt='home icon' />
+            <HomeIcon />
             <span>Home</span>
           </NavLink>
           <NavLink to='/profile' className='nav__link'>
-            <img src={user} alt='profile icon' />
+            <UserIcon />
             <span>Profile</span>
           </NavLink>
           <NavLink to='/settings' className='nav__link'>
-            <img src={settings} alt='settings icon' />
+            <SettingsIcon />
             <span>Settings</span>
           </NavLink>
         </div>

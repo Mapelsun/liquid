@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Home from './components/Home'
 import Profile from './components/Profile'
@@ -11,15 +11,17 @@ function App() {
     <Router>
       <div className='App'>
         <Header />
-        <Route path='/'>
-          <Home />
-        </Route>
-        <Route exact path='/profile'>
-          <Profile />
-        </Route>
-        <Route exact path='/settings'>
-          <Settings />
-        </Route>
+        <Switch>
+          <Route exact path='/'>
+            <Home />
+          </Route>
+          <Route path='/profile'>
+            <Profile />
+          </Route>
+          <Route path='/settings'>
+            <Settings />
+          </Route>
+        </Switch>
         <Footer />
       </div>
     </Router>
